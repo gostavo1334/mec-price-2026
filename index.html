@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metfone Express - STA Pricing & Full P&L (1-Screen Fit for Word)</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- SheetJS for Excel export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- html2canvas for copying DOM elements as images to clipboard -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <style>
+    :root {
+      /* Metfone Express Brand Red (Used strategically as accent & identity) */
+      --primary: #d32f2f;
+      --primary-dark: #b71c1c;
+      --primary-light: #fef2f2;
+      --primary-border: #fecaca;
+      
+      /* High-Contrast Corporate Neutrals (Makes all figures pop crisply!) */
+      --dark: #0f172a;
+      --gray-900: #0f172a;
+      --gray-800: #1e293b;
+      --gray-700: #334155;
+      --gray-600: #475569;
+      --gray-500: #64748b;
+      --gray-400: #94a3b8;
+      --gray-300: #cbd5e1;
+      --gray-200: #e2e8f0;
+      --gray-100: #f1f5f9;
+      --gray-50: #f8fafc;
+      --white: #ffffff;
+
+      /* Standard Accounting Financial Colors */
+      --success: #15803d;
+      --success-light: #dcfce7;
+      --danger: #b91c1c;
+      --danger-light: #fee2e2;
+      --warning: #b45309;
+
+      --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --radius: 10px;
+      --transition: all 0.15s ease-in-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: var(--gray-800);
+      line-height: 1.35;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Sticky Navbar: Crisp White with Metfone Red Logo & Accents */
+    .navbar {
+      background: #ffffff;
+      border-bottom: 2px solid var(--primary);
+      padding: 0.35rem 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      box-shadow: 0 2px 5px rgba(211, 47, 47, 0.25);
+    }
+
+    .brand-text h1 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      font-size: 0.65rem;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scale-controls {
+      display: flex;
+      align-items: center;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      border-radius: 6px;
+      padding: 2px 6px;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gray-600);
+    }
+
+    .scale-btn {
+      background: none;
+      border: none;
+      padding: 1px 5px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      border-radius: 3px;
+      color: var(--gray-700);
+      font-weight: 600;
+    }
+    .scale-btn:hover {
+      background: var(--gray-200);
+      color: var(--gray-900);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-hero {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      padding: 0.4rem 1rem;
+      box-shadow: 0 2px 6px rgba(211, 47, 47, 0.3);
+    }
+    .btn-hero:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--gray-700);
+      border-color: var(--gray-300);
+    }
+    .btn-outline:hover {
+      background: var(--gray-50);
+      border-color: var(--gray-400);
+      color: var(--gray-900);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1320px;
+      width: 100%;
+      margin: 0.35rem auto 0;
+      padding: 0 0.8rem;
+      flex: 1;
+      transform-origin: top center;
+      transition: transform 0.15s ease-out;
+    }
+
+    /* 2-Column Split Layout */
+    .workspace-layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 0.85rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1100px) {
+      .workspace-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Control Panel */
+    .control-panel {
+      background: #ffffff;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--gray-300);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 0.5rem 0.8rem;
+      background: #ffffff;
+      border-bottom: 1.2px solid var(--gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-header h2 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-header .badge-tag {
+      font-size: 0.62rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+    }
+
+    .panel-body {
+      padding: 0.65rem 0.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 0.45rem;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--gray-700);
+      margin-bottom: 0.18rem;
+    }
+
+    .form-control, .form-select {
+      width: 100%;
+      padding: 0.35rem 0.6rem;
+      border: 1.2px solid var(--gray-300);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      background: #ffffff;
+      outline: none;
+      height: 30px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.15);
+    }
+
+    .input-addon-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-addon-wrap .form-control {
+      padding-right: 2.4rem;
+    }
+
+    .input-addon {
+      position: absolute;
+      right: 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gray-500);
+      pointer-events: none;
+    }
+
+    .delivery-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .option-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.4rem;
+      border: 1.2px solid var(--gray-300);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      transition: var(--transition);
+    }
+
+    .option-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .option-btn .title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--gray-800);
+    }
+
+    .option-btn.active .title {
+      color: var(--primary-dark);
+    }
+
+    .option-btn .sub {
+      font-size: 0.65rem;
+      color: var(--gray-500);
+      margin-top: 1px;
+      font-weight: 600;
+    }
+
+    .option-btn.active .sub {
+      color: var(--primary);
+    }
+
+    /* Destination Ratio Selector */
+    .dest-option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: var(--gray-50);
+      border: 1.2px solid var(--gray-300);
+      border-radius: 6px;
+      padding: 0.35rem 0.6rem;
+    }
+
+    .dest-radio-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--gray-800);
+      cursor: pointer;
+    }
+
+    .dest-radio-label input[type="radio"] {
+      accent-color: var(--primary);
+    }
+
+    .custom-ratio-input-box {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+      padding-top: 4px;
+      border-top: 1px dashed var(--gray-300);
+    }
+
+    .custom-ratio-input-box.show {
+      display: flex;
+    }
+
+    .panel-callout {
+      background: var(--gray-50);
+      border: 1px dashed var(--gray-300);
+      border-radius: 6px;
+      padding: 0.45rem 0.65rem;
+      margin-top: 0.55rem;
+      font-size: 0.69rem;
+      color: var(--gray-600);
+      line-height: 1.35;
+    }
+
+    .panel-callout b {
+      color: var(--gray-900);
+    }
+
+    /* ======================================================== */
+    /* WORD-OPTIMIZED REPORT CANVAS (CLEAN WHITE & HIGH CONTRAST) */
+    /* ======================================================== */
+    .word-canvas-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #word-capture-report {
+      width: 100%;
+      max-width: 840px; /* Standard A4 portrait width for crisp 1:1 paste into Word */
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1.5px solid var(--gray-300);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      padding: 0.65rem 0.95rem 0.55rem;
+      position: relative;
+    }
+
+    /* Compact Report Header */
+    .report-brand-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .report-brand-header .title-area h2 {
+      font-size: 0.96rem;
+      font-weight: 900;
+      color: var(--gray-900);
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+
+    .report-brand-header .title-area h2 span.brand-red {
+      color: var(--primary);
+    }
+
+    .report-brand-header .title-area span.sub-text {
+      font-size: 0.65rem;
+      color: var(--gray-500);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .report-badge-origin {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 0.22rem 0.65rem;
+      border-radius: 5px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    /* Sleek Context Input Strip (Clean Light Slate with Clear Dark Text) */
+    .report-context-strip {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 0.3rem 0.65rem;
+      margin-bottom: 0.45rem;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      font-size: 0.7rem;
+    }
+
+    .report-context-strip .item b {
+      color: var(--gray-900);
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .report-context-strip .item span {
+      color: var(--gray-500);
+      font-weight: 700;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    /* 4 KPIs: Crisp White with Bold Dark Figures */
+    .report-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .report-kpi-card {
+      background: #ffffff;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 7px;
+      padding: 0.35rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .report-kpi-card .kpi-label {
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .report-kpi-card .kpi-val {
+      font-size: 1.28rem;
+      font-weight: 900;
+      color: var(--gray-900);
+      margin: 0.1rem 0;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .report-kpi-card .kpi-sub {
+      font-size: 0.66rem;
+      color: var(--gray-500);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* P&L Table (High-Contrast Clean Corporate Rows) */
+    .report-pnl-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0.45rem;
+    }
+
+    .report-pnl-table th {
+      background: var(--gray-100);
+      color: var(--gray-800);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 0.32rem 0.55rem;
+      border-bottom: 1.5px solid var(--gray-300);
+    }
+
+    .report-pnl-table td {
+      padding: 0.22rem 0.55rem;
+      font-size: 0.78rem;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-200);
+      line-height: 1.25;
+    }
+
+    /* Section Subheaders */
+    .report-pnl-table tr.row-group-head td {
+      background: var(--gray-50);
+      color: var(--gray-900);
+      font-size: 0.73rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 0.24rem 0.55rem;
+      border-top: 1.2px solid var(--gray-300);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .report-pnl-table tr.row-group-head td i {
+      color: var(--primary);
+      margin-right: 4px;
+    }
+
+    /* Total Operation Cost */
+    .report-pnl-table tr.row-total-op td {
+      background: var(--gray-100);
+      color: var(--gray-900);
+      font-weight: 800;
+      font-size: 0.84rem;
+      border-top: 1.2px solid var(--gray-400);
+      border-bottom: 1.2px solid var(--gray-400);
+      padding: 0.35rem 0.55rem;
+    }
+
+    /* Total Support Cost */
+    .report-pnl-table tr.row-total-sup td {
+      background: #faf5ff;
+      color: #581c87;
+      font-weight: 800;
+      font-size: 0.84rem;
+      border-top: 1.2px solid #d8b4fe;
+      border-bottom: 1.2px solid #d8b4fe;
+      padding: 0.32rem 0.55rem;
+    }
+
+    /* Tier 1 Profit (After Op Cost) */
+    .report-pnl-table tr.row-profit-tier1 td {
+      background: #ffffff;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.86rem;
+      font-weight: 800;
+      border-top: 1.5px solid var(--gray-300);
+      vertical-align: middle;
+    }
+
+    /* Tier 2 Profit (Net After Support Cost) - EXTRA PROMINENT & HIGH CONTRAST */
+    .report-pnl-table tr.row-profit-tier2 td {
+      background: var(--gray-50);
+      padding: 0.55rem 0.55rem;
+      font-size: 0.95rem;
+      font-weight: 900;
+      border-top: 2px solid var(--gray-400);
+      vertical-align: middle;
+    }
+
+    /* Prominent Badges with Standard Accounting Green/Red */
+    .profit-pill-lg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      min-width: 82px;
+      letter-spacing: -0.01em;
+    }
+
+    .profit-pill-xl {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.28rem 0.8rem;
+      border-radius: 7px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      min-width: 92px;
+      letter-spacing: -0.01em;
+    }
+
+    .pill-green {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1.2px solid #86efac;
+    }
+
+    .pill-red {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1.2px solid #fca5a5;
+    }
+
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+
+    /* Collapsible Reference Matrix */
+    .accordion-toggle {
+      width: 100%;
+      max-width: 840px;
+      background: #ffffff;
+      border: 1px solid var(--gray-300);
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--gray-700);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    .accordion-toggle:hover {
+      background: var(--gray-50);
+    }
+
+    .accordion-content {
+      display: none;
+      max-width: 840px;
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--gray-300);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 0.75rem;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .accordion-content.open {
+      display: block;
+    }
+
+    .compact-table {
+      width: 100%;
+      font-size: 0.72rem;
+      border-collapse: collapse;
+    }
+
+    .compact-table th {
+      background: var(--gray-100);
+      padding: 0.3rem 0.5rem;
+      font-weight: 700;
+      color: var(--gray-600);
+      text-align: left;
+    }
+
+    .compact-table td {
+      padding: 0.25rem 0.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--gray-700);
+    }
+
+    .highlight-active-tier {
+      background-color: var(--primary-light) !important;
+      font-weight: 800;
+      color: var(--primary-dark) !important;
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.15rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .toast-notification.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast-notification i {
+      color: #4ade80;
+      font-size: 1rem;
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; height: auto; }
+      .navbar, .control-panel, .scale-controls, .accordion-toggle, .btn { display: none !important; }
+      .workspace-layout { display: block; }
+      .container { padding: 0; margin: 0; max-width: 100%; transform: none !important; }
+      #word-capture-report { border: none; box-shadow: none; max-width: 100%; padding: 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navbar -->
+  <header class="navbar">
+    <div class="brand-wrap">
+      <div class="brand-logo">ME</div>
+      <div class="brand-text">
+        <h1>METFONE EXPRESS</h1>
+        <span>STA Unit Economics (One-Screen View)</span>
+      </div>
+    </div>
+    
+    <div class="nav-actions">
+      <!-- Auto Scale / Fit Screen Toggle -->
+      <div class="scale-controls" title="Adjust layout size to fit your screen height perfectly">
+        <span>Zoom:</span>
+        <button class="scale-btn" onclick="setScale(1.0)">100%</button>
+        <button class="scale-btn" onclick="setScale(0.92)">92%</button>
+        <button class="scale-btn" onclick="setScale(0.85)">85%</button>
+        <button class="scale-btn" onclick="autoFitHeight()" style="font-weight: 800; color: var(--primary);">Auto-Fit</button>
+      </div>
+
+      <!-- MAIN HERO COPY BUTTON -->
+      <button class="btn btn-hero" id="btn-copy-for-word" onclick="copyWordReportAsImage()">
+        <i class="fa-solid fa-copy"></i> Copy for Word (A4 Ratio)
+      </button>
+      <button class="btn btn-outline" onclick="window.print()">
+        <i class="fa-solid fa-print"></i> Print
+      </button>
+      <button class="btn btn-primary" onclick="exportToExcel()">
+        <i class="fa-solid fa-file-excel"></i> Excel
+      </button>
+    </div>
+  </header>
+
+  <main class="container" id="main-view-container">
+    <div class="workspace-layout">
+
+      <!-- LEFT COLUMN: INTERACTIVE CONTROLS -->
+      <aside class="control-panel">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-sliders" style="color: var(--primary);"></i> Input Parameters</h2>
+          <span class="badge-tag" id="panel-prov-type">Provincial Branch</span>
+        </div>
+        <div class="panel-body">
+          
+          <!-- 1. FROM PROVINCE -->
+          <div class="form-group">
+            <label class="form-label" for="select-province">
+              <span>1. FROM PROVINCE</span>
+              <span style="font-size: 0.65rem; color: var(--primary);">Origin</span>
+            </label>
+            <select class="form-select" id="select-province" onchange="calculateSTA()">
+              <!-- Populated via JS sorted A -> Z -->
+            </select>
+          </div>
+
+          <!-- 2. Weight (kg) -->
+          <div class="form-group">
+            <label class="form-label" for="input-weight">
+              <span>2. Weight (kg)</span>
+              <span style="font-size: 0.65rem; color: var(--info);" id="weight-tier-text">Tier: Over 5 – 10 kg</span>
+            </label>
+            <div class="input-addon-wrap">
+              <input type="number" step="0.1" min="0.1" max="1000" class="form-control" id="input-weight" value="6" oninput="calculateSTA()">
+              <span class="input-addon">kg</span>
+            </div>
+          </div>
+
+          <!-- 3. Price want to sell (P2P) (USD) -->
+          <div class="form-group">
+            <label class="form-label" for="input-p2p-price">
+              <span>3. Price want to sell (P2P)</span>
+              <span style="font-size: 0.65rem; color: var(--success);">Proposal</span>
+            </label>
+            <div class="input-addon-wrap">
+              <input type="number" step="0.01" min="0" class="form-control" id="input-p2p-price" value="1.30" oninput="calculateSTA()">
+              <span class="input-addon">USD</span>
+            </div>
+          </div>
+
+          <!-- 4. Home delivery (Yes/No) -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>4. Home delivery (Yes / No)</span>
+              <span style="font-size: 0.65rem; color: var(--purple);">Last Mile</span>
+            </label>
+            <div class="delivery-options">
+              <div class="option-btn active" id="btn-delivery-yes" onclick="setDelivery(true)">
+                <span class="title"><i class="fa-solid fa-house-chimney"></i> Yes</span>
+                <span class="sub">+ $0.25 USD</span>
+              </div>
+              <div class="option-btn" id="btn-delivery-no" onclick="setDelivery(false)">
+                <span class="title"><i class="fa-solid fa-store"></i> No (Counter)</span>
+                <span class="sub">+ $0.00 USD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Destination Distribution Ratio -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>5. Destination Share (Tỷ trọng)</span>
+              <span style="font-size: 0.65rem; color: var(--warning);">Routing</span>
+            </label>
+            <div class="dest-option-group">
+              <label class="dest-radio-label">
+                <input type="radio" name="dest-ratio-type" id="ratio-opt-default" value="default" checked onchange="toggleRatioOption()">
+                <span>Option 1: Metfone general (24.8% PNP)</span>
+              </label>
+              <label class="dest-radio-label">
+                <input type="radio" name="dest-ratio-type" id="ratio-opt-custom" value="custom" onchange="toggleRatioOption()">
+                <span>Option 2: Custom % to Phnom Penh</span>
+              </label>
+              
+              <div class="custom-ratio-input-box" id="custom-ratio-box">
+                <div class="input-addon-wrap" style="width: 105px;">
+                  <input type="number" min="0" max="100" step="1" class="form-control" id="input-pnp-pct" value="40" oninput="calculateSTA()" style="height: 26px; font-size: 0.78rem;">
+                  <span class="input-addon" style="font-size: 0.7rem; right: 0.4rem;">% PNP</span>
+                </div>
+                <div style="font-size: 0.68rem; color: var(--gray-600); font-weight: 700;">
+                  -> <span id="label-prov-pct" style="color: var(--primary); font-weight: 900;">60%</span> to Prov
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ver 6.11 Formulas Callout -->
+          <div class="panel-callout">
+            <div style="font-weight: 800; color: var(--gray-800); margin-bottom: 2px;">
+              <i class="fa-solid fa-calculator" style="color: var(--primary);"></i> Ver 6.11 Rules & Formula
+            </div>
+            • <b>Discount:</b> <code>1 - (P2P / Avg Tariff)</code>.<br>
+            • <b>Tuk tuk:</b> <b>$0.18</b> (&gt;5kg &amp; Home Delivery).<br>
+            • <b>Hub MM:</b> <b>$0.15/bill</b> (incl. 13th month).<br>
+            • <b>Support:</b> SP ($0.17) + Mgmt (10%) + Mkt (3%) + Other (5%).
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN: WORD-OPTIMIZED A4 REPORT CANVAS (COMPACT HEIGHT) -->
+      <section class="word-canvas-wrapper">
+
+        <!-- ======================================================== -->
+        <!-- CAPTURE ELEMENT: BOTH PROFIT TIERS FULLY VISIBLE -->
+        <!-- ======================================================== -->
+        <div id="word-capture-report">
+          
+          <!-- Official Memo Header -->
+          <div class="report-brand-header">
+            <div class="title-area">
+              <h2>METFONE EXPRESS – STA PRICING &amp; P&L STATEMENT</h2>
+              <span>STRATEGIC TARGET ACCOUNT BUSINESS CASE EVALUATION</span>
+            </div>
+            <div class="report-badge-origin" id="rep-origin-pill">
+              <i class="fa-solid fa-location-dot"></i>
+              <span id="rep-origin-name">Battambang Branch</span>
+            </div>
+          </div>
+
+          <!-- Context Input Summary Strip (Replaces separate input card in image) -->
+          <div class="report-context-strip">
+            <div class="item">
+              <span>Origin Province</span>
+              <b id="strip-origin">Battambang</b>
+            </div>
+            <div class="item">
+              <span>Parcel Weight</span>
+              <b id="strip-weight">6.0 kg (Tier 5–10kg)</b>
+            </div>
+            <div class="item">
+              <span>Proposal (P2P)</span>
+              <b id="strip-p2p">$1.30 USD</b>
+            </div>
+            <div class="item">
+              <span>Home Delivery</span>
+              <b id="strip-delivery">Yes (+$0.25 USD)</b>
+            </div>
+            <div class="item">
+              <span>Destination</span>
+              <b id="strip-dest-share">Default (24.8% PNP)</b>
+            </div>
+          </div>
+
+          <!-- Top 4 KPIs (Clear, Large, High-Contrast) -->
+          <div class="report-kpi-grid">
+            <div class="report-kpi-card">
+              <span class="kpi-label">FINAL SELLING PRICE</span>
+              <div class="kpi-val" id="kpi-final-price">$1.55</div>
+              <span class="kpi-sub" id="kpi-price-sub">P2P: $1.30 | HD: $0.25</span>
+            </div>
+            <div class="report-kpi-card">
+              <span class="kpi-label">DISCOUNT RATE</span>
+              <div class="kpi-val" id="kpi-discount-rate" style="color: var(--primary);">49.2%</div>
+              <span class="kpi-sub" id="kpi-avg-price-sub">vs Avg Tariff $2.56</span>
+            </div>
+            <div class="report-kpi-card">
+              <span class="kpi-label">NET REVENUE (EXCL. VAT)</span>
+              <div class="kpi-val" id="kpi-revenue-net">$1.41</div>
+              <span class="kpi-sub">P2P $1.18 + HD $0.23</span>
+            </div>
+            <div class="report-kpi-card">
+              <span class="kpi-label">WEIGHTED DISTANCE</span>
+              <div class="kpi-val" id="kpi-avg-distance">457.7 km</div>
+              <span class="kpi-sub" id="kpi-route-note">Pick up => Mega Hub => Delivery</span>
+            </div>
+          </div>
+
+          <!-- Main P&L Table (Tight Columns, Large Text, Both Profit Rows Visible) -->
+          <table class="report-pnl-table">
+            <thead>
+              <tr>
+                <th style="width: 43%;">COST &amp; REVENUE BREAKDOWN</th>
+                <th class="text-right" style="width: 19%;">1.5T TRUCK</th>
+                <th class="text-right" style="width: 19%;">3.5T TRUCK</th>
+                <th class="text-right" style="width: 19%;">8.0T TRUCK</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- REVENUE -->
+              <tr>
+                <td><b>Net Customer Price (excl. VAT 10%)</b></td>
+                <td class="text-right" id="val-rev-15"><b>$1.41</b></td>
+                <td class="text-right" id="val-rev-35"><b>$1.41</b></td>
+                <td class="text-right" id="val-rev-80"><b>$1.41</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem; font-size: 0.74rem; color: var(--gray-500);">• Avg P2P Price (before tax)</td>
+                <td class="text-right" id="val-p2p-notax-15">$1.18</td>
+                <td class="text-right" id="val-p2p-notax-35">$1.18</td>
+                <td class="text-right" id="val-p2p-notax-80">$1.18</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem; font-size: 0.74rem; color: var(--gray-500);">• Home Delivery Fee (before tax)</td>
+                <td class="text-right" id="val-hd-notax-15">$0.23</td>
+                <td class="text-right" id="val-hd-notax-35">$0.23</td>
+                <td class="text-right" id="val-hd-notax-80">$0.23</td>
+              </tr>
+
+              <!-- I. OPERATION COSTS -->
+              <tr class="row-group-head">
+                <td colspan="4"><i class="fa-solid fa-truck-fast" style="color: var(--info);"></i> I. OPERATION COSTS (CHI PHÍ HOẠT ĐỘNG)</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">1. Salary of FM (pick up)</td>
+                <td class="text-right" id="val-fm-15">$0.30</td>
+                <td class="text-right" id="val-fm-35">$0.30</td>
+                <td class="text-right" id="val-fm-80">$0.30</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">2. Salary of MM (sorting at Hub)</td>
+                <td class="text-right" id="val-mm-15">$0.15</td>
+                <td class="text-right" id="val-mm-35">$0.15</td>
+                <td class="text-right" id="val-mm-80">$0.15</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">3. Connect expense (Linehaul)</td>
+                <td class="text-right" style="color: var(--primary); font-weight: 800;" id="val-connect-15">$0.92</td>
+                <td class="text-right" style="color: var(--warning); font-weight: 800;" id="val-connect-35">$0.39</td>
+                <td class="text-right" style="color: var(--success); font-weight: 800;" id="val-connect-80">$0.17</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">4. Salary of LM (delivery)</td>
+                <td class="text-right" id="val-lm-15">$0.30</td>
+                <td class="text-right" id="val-lm-35">$0.30</td>
+                <td class="text-right" id="val-lm-80">$0.30</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">5. Tuk tuk Expense (&gt;5kg &amp; Home)</td>
+                <td class="text-right" style="color: var(--danger); font-weight: 700;" id="val-tuktuk-15">$0.18</td>
+                <td class="text-right" style="color: var(--danger); font-weight: 700;" id="val-tuktuk-35">$0.18</td>
+                <td class="text-right" style="color: var(--danger); font-weight: 700;" id="val-tuktuk-80">$0.18</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">6. Sales Commission (3%)</td>
+                <td class="text-right" id="val-comm-15">$0.04</td>
+                <td class="text-right" id="val-comm-35">$0.04</td>
+                <td class="text-right" id="val-comm-80">$0.04</td>
+              </tr>
+              <tr class="row-total-op">
+                <td><b>TOTAL OPERATION COST (USD)</b></td>
+                <td class="text-right" id="val-opcost-15"><b>$1.89</b></td>
+                <td class="text-right" id="val-opcost-35"><b>$1.36</b></td>
+                <td class="text-right" id="val-opcost-80"><b>$1.14</b></td>
+              </tr>
+
+              <!-- PROFIT TIER 1 -->
+              <tr class="row-profit-tier1">
+                <td>
+                  <div style="font-size: 0.88rem; font-weight: 800; color: var(--gray-900);">PROFIT AFTER OPERATION COST</div>
+                  <div style="font-size: 0.68rem; color: var(--gray-500); font-weight: 600;">Lợi nhuận sau chi phí hoạt động</div>
+                </td>
+                <td class="text-right" id="val-profit-op-15">
+                  <span class="profit-pill-lg pill-red">-$0.48</span>
+                </td>
+                <td class="text-right" id="val-profit-op-35">
+                  <span class="profit-pill-lg pill-green">+$0.05</span>
+                </td>
+                <td class="text-right" id="val-profit-op-80">
+                  <span class="profit-pill-lg pill-green">+$0.27</span>
+                </td>
+              </tr>
+
+              <!-- II. SUPPORT COSTS -->
+              <tr class="row-group-head">
+                <td colspan="4"><i class="fa-solid fa-headset" style="color: var(--purple);"></i> II. SUPPORT COSTS (CHI PHÍ HỖ TRỢ / QUẢN LÝ)</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">1. Fixed salary of Service Point</td>
+                <td class="text-right" id="val-sup-fixed-15">$0.17</td>
+                <td class="text-right" id="val-sup-fixed-35">$0.17</td>
+                <td class="text-right" id="val-sup-fixed-80">$0.17</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">2. General management (10%)</td>
+                <td class="text-right" id="val-sup-mgmt-15">$0.26</td>
+                <td class="text-right" id="val-sup-mgmt-35">$0.26</td>
+                <td class="text-right" id="val-sup-mgmt-80">$0.26</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">3. Marketing expense (3%)</td>
+                <td class="text-right" id="val-sup-mkt-15">$0.08</td>
+                <td class="text-right" id="val-sup-mkt-35">$0.08</td>
+                <td class="text-right" id="val-sup-mkt-80">$0.08</td>
+              </tr>
+              <tr>
+                <td style="padding-left: 1.1rem;">4. Other expense (5%)</td>
+                <td class="text-right" id="val-sup-other-15">$0.13</td>
+                <td class="text-right" id="val-sup-other-35">$0.13</td>
+                <td class="text-right" id="val-sup-other-80">$0.13</td>
+              </tr>
+              <tr class="row-total-sup">
+                <td><b>TOTAL SUPPORT COST (USD)</b></td>
+                <td class="text-right" id="val-supcost-15"><b>$0.63</b></td>
+                <td class="text-right" id="val-supcost-35"><b>$0.63</b></td>
+                <td class="text-right" id="val-supcost-80"><b>$0.63</b></td>
+              </tr>
+
+              <!-- PROFIT TIER 2: FINAL NET PROFIT (EXTRA PROMINENT) -->
+              <tr class="row-profit-tier2">
+                <td>
+                  <div style="font-size: 0.96rem; font-weight: 900; color: var(--primary-dark);">PROFIT AFTER OP &amp; SUPPORT COST</div>
+                  <div style="font-size: 0.7rem; color: var(--gray-600); font-weight: 700;">Lợi nhuận ròng sau toàn bộ chi phí</div>
+                </td>
+                <td class="text-right" id="val-profit-final-15">
+                  <span class="profit-pill-xl pill-red">-$1.11</span>
+                </td>
+                <td class="text-right" id="val-profit-final-35">
+                  <span class="profit-pill-xl pill-red">-$0.58</span>
+                </td>
+                <td class="text-right" id="val-profit-final-80">
+                  <span class="profit-pill-xl pill-red">-$0.36</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <!-- END OF CAPTURE ELEMENT -->
+
+        <!-- Collapsible Reference Section -->
+        <button class="accordion-toggle" onclick="toggleAccordion('reference-drawer', 'acc-drawer-icon')">
+          <span><i class="fa-solid fa-database"></i> View Reference Public Tariffs & 25 Provinces Distance Matrix</span>
+          <i class="fa-solid fa-chevron-down" id="acc-drawer-icon"></i>
+        </button>
+
+        <div class="accordion-content" id="reference-drawer">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.76rem; margin-bottom: 4px; color: var(--gray-800);">Official Public Tariff Schedule</div>
+              <table class="compact-table" id="table-public-tariffs">
+                <thead>
+                  <tr>
+                    <th>Tier</th>
+                    <th class="text-right">Intra</th>
+                    <th class="text-right">PNP <=> Prov</th>
+                    <th class="text-right">Prov <=> Prov</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-public-tariffs"></tbody>
+              </table>
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 0.76rem; margin-bottom: 4px; color: var(--gray-800);">25 Provinces Volume & Distance</div>
+              <table class="compact-table" id="table-provinces">
+                <thead>
+                  <tr>
+                    <th>Province</th>
+                    <th>Code</th>
+                    <th>Hub (km)</th>
+                    <th>Orders</th>
+                    <th>Share</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-provinces"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Toast Alert -->
+  <div id="toast" class="toast-notification">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-message">Report copied as image! Press Ctrl + V in Word to paste.</span>
+  </div>
+
+  <script>
+    // 25 Provinces Data extracted from Excel
+    const PROVINCES_DATA = [
+      { no: 1, name: "Banteay Meanchey", code: "BAN", center: "Serei Saophoan", distToHub: 360, orders: 3386 },
+      { no: 2, name: "Stung Treng", code: "STU", center: "Stung Treng", distToHub: 480, orders: 1665 },
+      { no: 3, name: "Kandal", code: "KAN", center: "Ta Khmau", distToHub: 15, orders: 2948 },
+      { no: 4, name: "Kampong Chhnang", code: "CHH", center: "Kampong Chhnang", distToHub: 91, orders: 1859 },
+      { no: 5, name: "Phnom Penh", code: "PNP", center: "Megahub", distToHub: Math.sqrt(678 / Math.PI) / 2, orders: 19260 },
+      { no: 6, name: "Koh Kong", code: "KOH", center: "Krong Koh Kong", distToHub: 270, orders: 1509 },
+      { no: 7, name: "Battambang", code: "BAT", center: "Battambang", distToHub: 290, orders: 4795 },
+      { no: 8, name: "Takeo", code: "TAK", center: "Doun Kaev", distToHub: 78, orders: 2673 },
+      { no: 9, name: "Oddar Meanchey", code: "ODD", center: "Samraong", distToHub: 440, orders: 2031 },
+      { no: 10, name: "Preah Sihanouk", code: "SIH", center: "Sihanoukville", distToHub: 230, orders: 3103 },
+      { no: 11, name: "Kampong Speu", code: "SPE", center: "Chbar Mon", distToHub: 48, orders: 3545 },
+      { no: 12, name: "Tboung Khmum", code: "TBK", center: "Suong", distToHub: 185, orders: 2583 },
+      { no: 13, name: "Pursat", code: "PUR", center: "Pursat", distToHub: 190, orders: 2250 },
+      { no: 14, name: "Svay Rieng", code: "SVA", center: "Svay Rieng", distToHub: 125, orders: 2242 },
+      { no: 15, name: "Kampot", code: "KAM", center: "Kampot", distToHub: 150, orders: 2444 },
+      { no: 16, name: "Prey Veng", code: "PRE", center: "Prey Veng", distToHub: 95, orders: 2553 },
+      { no: 17, name: "Kratie", code: "KRA", center: "Kratie", distToHub: 255, orders: 1817 },
+      { no: 18, name: "Kampong Thom", code: "THO", center: "Stueng Saen", distToHub: 165, orders: 3646 },
+      { no: 19, name: "Kampong Cham", code: "CHA", center: "Kampong Cham", distToHub: 124, orders: 3758 },
+      { no: 20, name: "Siem Reap", code: "SIE", center: "Siem Reap", distToHub: 315, orders: 4869 },
+      { no: 21, name: "Preah Vihear", code: "PRH", center: "Tbeng Meanchey", distToHub: 300, orders: 1285 },
+      { no: 22, name: "Ratanakiri", code: "ROT", center: "Banlung", distToHub: 590, orders: 1541 },
+      { no: 23, name: "Mondulkiri", code: "MON", center: "Sen Monorom", distToHub: 370, orders: 945 },
+      { no: 24, name: "Kep", code: "KEP", center: "Krong Kep", distToHub: 160, orders: 59 },
+      { no: 25, name: "Pailin", code: "PAI", center: "Pailin", distToHub: 370, orders: 994 }
+    ];
+
+    // Standard Price List from sheet 'Price list'
+    const PRICE_LIST = [
+      { maxW: 5, label: "From 0 – 5 kg", intraPrice: 1.23, pnpProvPrice: 1.48, interProvPrice: 2.35 },
+      { maxW: 10, label: "Over 5 – 10 kg", intraPrice: 1.60, pnpProvPrice: 1.85, interProvPrice: 2.79 },
+      { maxW: 20, label: "Over 10 – 20 kg", intraPrice: 2.10, pnpProvPrice: 2.84, interProvPrice: 4.27 },
+      { maxW: 30, label: "Over 20 – 30 kg", intraPrice: 2.72, pnpProvPrice: 3.83, interProvPrice: 5.75 },
+      { maxW: 50, label: "Over 30 – 50 kg", intraPrice: 4.07, pnpProvPrice: 5.80, interProvPrice: 8.72 },
+      { maxW: 80, label: "Over 50 – 80 kg", intraPrice: 5.93, pnpProvPrice: 8.77, interProvPrice: 13.16 },
+      { maxW: 100, label: "Over 80 – 100 kg", intraPrice: 7.28, pnpProvPrice: 10.74, interProvPrice: 16.12 }
+    ];
+
+    // Model Constants updated per Ver 6.11
+    const TOTAL_SORTING_SALARY = 10814.93 * (1 + 1/12); // 11716.174
+    const TOTAL_BILLS_SORTED = 77760;
+    const MM_SORTING_UNIT_COST = TOTAL_SORTING_SALARY / TOTAL_BILLS_SORTED; // 0.15067 -> rounds to 0.15
+    const KM_RATE_RIEL = 2000;
+    const RIEL_PER_USD = 4000;
+    const VAT_RATE = 1.1; // 10% VAT
+    const COMMISSION_RATE = 0.03; // 3%
+
+    let isHomeDelivery = true;
+
+    // Zoom / Screen Scaling logic
+    function setScale(scaleVal) {
+      const container = document.getElementById("main-view-container");
+      container.style.transform = `scale(${scaleVal})`;
+    }
+
+    function autoFitHeight() {
+      const availableH = window.innerHeight - 55; // minus navbar and margins
+      const reportElem = document.getElementById("word-capture-report");
+      const currentH = reportElem ? reportElem.offsetHeight + 40 : 680;
+      if (currentH > availableH) {
+        const ratio = Math.max(0.72, (availableH / currentH));
+        setScale(ratio.toFixed(2));
+      } else {
+        setScale(1.0);
+      }
+    }
+
+    // Initialize with provinces sorted alphabetically (A -> Z)
+    window.addEventListener("DOMContentLoaded", () => {
+      const select = document.getElementById("select-province");
+      const sortedProvinces = [...PROVINCES_DATA].sort((a, b) => a.name.localeCompare(b.name));
+      sortedProvinces.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p.name;
+        opt.textContent = `${p.name} (${p.code})${p.code === 'PNP' ? ' - Capital Megahub' : ''}`;
+        if (p.name === "Battambang") opt.selected = true; // default in Ver 6.11
+        select.appendChild(opt);
+      });
+
+      calculateSTA();
+      autoFitHeight();
+      window.addEventListener("resize", autoFitHeight);
+    });
+
+    function setDelivery(val) {
+      isHomeDelivery = val;
+      document.getElementById("btn-delivery-yes").classList.toggle("active", isHomeDelivery);
+      document.getElementById("btn-delivery-no").classList.toggle("active", !isHomeDelivery);
+      calculateSTA();
+    }
+
+    // Toggle Destination Ratio Option
+    function toggleRatioOption() {
+      const isCustom = document.getElementById("ratio-opt-custom").checked;
+      const customBox = document.getElementById("custom-ratio-box");
+      if (isCustom) {
+        customBox.classList.add("show");
+      } else {
+        customBox.classList.remove("show");
+      }
+      calculateSTA();
+    }
+
+    function toggleAccordion(contentId, iconId) {
+      const content = document.getElementById(contentId);
+      const icon = document.getElementById(iconId);
+      const isOpen = content.classList.toggle("open");
+      icon.style.transform = isOpen ? "rotate(180deg)" : "rotate(0deg)";
+    }
+
+    function calculateSTA() {
+      const originName = document.getElementById("select-province").value;
+      const weight = Math.max(0.1, parseFloat(document.getElementById("input-weight").value) || 0.1);
+      const p2pPrice = parseFloat(document.getElementById("input-p2p-price").value) || 0;
+      const homeDeliveryFee = isHomeDelivery ? 0.25 : 0.00;
+      const finalPrice = p2pPrice + homeDeliveryFee;
+
+      const isPNPOrigin = (originName === "Phnom Penh");
+
+      // 1. Determine Tier accurately: 3kg, 4kg, 5kg ALL belong to "From 0 – 5 kg"
+      let currentTier = null;
+      for (let i = 0; i < PRICE_LIST.length; i++) {
+        if (weight <= PRICE_LIST[i].maxW) {
+          currentTier = Object.assign({}, PRICE_LIST[i]);
+          break;
+        }
+      }
+
+      if (!currentTier) {
+        const extraKg = Math.ceil(weight - 100);
+        currentTier = {
+          maxW: weight,
+          label: `Over 100 kg (+${extraKg} kg)`,
+          intraPrice: 7.28 + (extraKg * 0.10),
+          pnpProvPrice: 10.74 + (extraKg * 0.15),
+          interProvPrice: 16.12 + (extraKg * 0.20)
+        };
+      }
+      document.getElementById("weight-tier-text").textContent = `Tier: ${currentTier.label}`;
+
+      // Render Public Tariff Table
+      const tbodyTariffs = document.getElementById("tbody-public-tariffs");
+      tbodyTariffs.innerHTML = "";
+      PRICE_LIST.forEach(t => {
+        const isCurrent = (t.label === currentTier.label);
+        const tr = document.createElement("tr");
+        if (isCurrent) tr.classList.add("highlight-active-tier");
+        tr.innerHTML = `
+          <td><b>${t.label}</b> ${isCurrent ? '<span style="font-size:0.65rem; color:var(--primary); font-weight:700;">(ACTIVE)</span>' : ''}</td>
+          <td class="text-right">$${t.intraPrice.toFixed(2)}</td>
+          <td class="text-right">$${t.pnpProvPrice.toFixed(2)}</td>
+          <td class="text-right">$${t.interProvPrice.toFixed(2)}</td>
+        `;
+        tbodyTariffs.appendChild(tr);
+      });
+
+      // 2. Differentiate Public Price Based on Origin
+      let publicPriceToProv = 0;
+      let publicPriceToPNP = 0;
+
+      if (isPNPOrigin) {
+        publicPriceToProv = currentTier.pnpProvPrice;
+        publicPriceToPNP = currentTier.intraPrice;
+
+        document.getElementById("panel-prov-type").textContent = "Capital Megahub";
+        document.getElementById("panel-prov-type").style.background = "#dbeafe";
+        document.getElementById("panel-prov-type").style.color = "#1e40af";
+
+        document.getElementById("rep-origin-pill").style.background = "#2563eb";
+        document.getElementById("rep-origin-name").textContent = "Phnom Penh (Megahub)";
+      } else {
+        publicPriceToProv = currentTier.interProvPrice;
+        publicPriceToPNP = currentTier.pnpProvPrice;
+
+        document.getElementById("panel-prov-type").textContent = "Provincial Branch";
+        document.getElementById("panel-prov-type").style.background = "var(--primary-light)";
+        document.getElementById("panel-prov-type").style.color = "var(--primary)";
+
+        document.getElementById("rep-origin-pill").style.background = "var(--primary)";
+        document.getElementById("rep-origin-name").textContent = `${originName} Branch`;
+      }
+
+      // Update Context Strip
+      document.getElementById("strip-origin").textContent = originName;
+      document.getElementById("strip-weight").textContent = `${weight.toFixed(1)} kg (${currentTier.label})`;
+      document.getElementById("strip-p2p").textContent = `$${p2pPrice.toFixed(2)} USD`;
+      document.getElementById("strip-delivery").textContent = isHomeDelivery ? "Yes (+$0.25 USD)" : "No (Counter)";
+
+      // 3. DESTINATION SHARE CALCULATION (OPTION 1 vs OPTION 2)
+      const isCustomRatio = document.getElementById("ratio-opt-custom").checked;
+      let pnpRatio = 19260 / TOTAL_BILLS_SORTED; // Default 24.7685%
+      let provRatio = 1 - pnpRatio;
+
+      if (isCustomRatio) {
+        let pnpInput = parseFloat(document.getElementById("input-pnp-pct").value);
+        if (isNaN(pnpInput)) pnpInput = 0;
+        pnpInput = Math.max(0, Math.min(100, pnpInput));
+        pnpRatio = pnpInput / 100;
+        provRatio = 1 - pnpRatio;
+        document.getElementById("label-prov-pct").textContent = `${(provRatio * 100).toFixed(0)}%`;
+        document.getElementById("strip-dest-share").textContent = `Custom (${(pnpRatio * 100).toFixed(0)}% PNP / ${(provRatio * 100).toFixed(0)}% Prov)`;
+      } else {
+        document.getElementById("strip-dest-share").textContent = `Default (24.8% PNP)`;
+      }
+
+      // 4. Distance & Delivery Distribution Matrix
+      const originProv = PROVINCES_DATA.find(p => p.name === originName) || PROVINCES_DATA[6];
+      const distOriginToHub = isPNPOrigin ? 0 : originProv.distToHub;
+
+      let totalWeightedDistance = 0;
+      const tbody = document.getElementById("tbody-provinces");
+      tbody.innerHTML = "";
+
+      const totalOtherOrders = TOTAL_BILLS_SORTED - 19260; // 58500
+
+      PROVINCES_DATA.forEach(p => {
+        let distMegahubToProv = p.distToHub;
+        let totalMMDist = isPNPOrigin ? ((p.code === "PNP") ? p.distToHub : distMegahubToProv) : (distMegahubToProv + distOriginToHub);
+
+        let finalShare = 0;
+        if (p.code === "PNP") {
+          finalShare = pnpRatio;
+        } else {
+          finalShare = (p.orders / totalOtherOrders) * provRatio;
+        }
+
+        const weightedDist = totalMMDist * finalShare;
+        totalWeightedDistance += weightedDist;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><b>${p.name}</b></td>
+          <td>${p.code}</td>
+          <td>${typeof p.distToHub === 'number' ? p.distToHub.toFixed(1) : p.distToHub}</td>
+          <td>${p.orders.toLocaleString()}</td>
+          <td>${(finalShare * 100).toFixed(1)}%</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const avgOrderDistance = totalWeightedDistance;
+
+      // 5. Weighted Average Public Price (C11)
+      const avgPrice = (publicPriceToProv * provRatio) + (publicPriceToPNP * pnpRatio);
+
+      // 5. Discount Rate: 1 - (Price_want_to_sell / Average_price)
+      const discountRate = avgPrice > 0 ? (1 - (p2pPrice / avgPrice)) : 0;
+
+      // 6. Prices After Discount & Before Tax (10% VAT)
+      const avgPriceBeforeTax = Math.round((avgPrice * (1 - discountRate) / VAT_RATE) * 100) / 100;
+      const homeDeliveryBeforeTax = Math.round((homeDeliveryFee / VAT_RATE) * 100) / 100;
+      const totalNetRevenueBeforeTax = Math.round((avgPriceBeforeTax + homeDeliveryBeforeTax) * 100) / 100;
+
+      // 7. OPERATION COSTS
+      const heavyBonus = (weight <= 5) ? 0 : (weight > 30 ? 0.3 : 0.1);
+      const salaryFM = Math.round((0.2 + heavyBonus) * 100) / 100;
+      const salaryMM = Math.round(MM_SORTING_UNIT_COST * 100) / 100; // 0.15
+
+      const calcConnectExpense = (capacityKg) => {
+        const capacityOrders = capacityKg / weight;
+        const totalTripCostUSD = (avgOrderDistance * KM_RATE_RIEL) / RIEL_PER_USD;
+        return Math.round((totalTripCostUSD / capacityOrders) * 100) / 100;
+      };
+
+      const connect15 = calcConnectExpense(1500);
+      const connect35 = calcConnectExpense(3500);
+      const connect80 = calcConnectExpense(8000);
+
+      const salaryLM = Math.round(((isHomeDelivery ? 0.2 : 0.1) + heavyBonus) * 100) / 100;
+      const tuktukExpense = (weight > 5 && isHomeDelivery) ? 0.18 : 0.00;
+      const commission = Math.round(((p2pPrice / VAT_RATE) * COMMISSION_RATE) * 100) / 100;
+
+      // TOTAL OPERATION COST:
+      const opCost15 = Math.round((salaryFM + salaryMM + connect15 + salaryLM + tuktukExpense + commission) * 100) / 100;
+      const opCost35 = Math.round((salaryFM + salaryMM + connect35 + salaryLM + tuktukExpense + commission) * 100) / 100;
+      const opCost80 = Math.round((salaryFM + salaryMM + connect80 + salaryLM + tuktukExpense + commission) * 100) / 100;
+
+      // 8. PROFIT TIER 1: After Operation Cost
+      const profitOp15 = Math.round((avgPriceBeforeTax + homeDeliveryBeforeTax - opCost15) * 100) / 100;
+      const profitOp35 = Math.round((avgPriceBeforeTax + homeDeliveryBeforeTax - opCost35) * 100) / 100;
+      const profitOp80 = Math.round((avgPriceBeforeTax + homeDeliveryBeforeTax - opCost80) * 100) / 100;
+
+      // 9. SUPPORT COSTS
+      const supFixedSP = 0.17;
+      const supManagement = Math.round((0.10 * avgPrice) * 100) / 100;
+      const supMarketing = Math.round((0.03 * avgPrice) * 100) / 100;
+      const supOther = Math.round((0.05 * avgPrice) * 100) / 100;
+      const totalSupportCost = Math.round((supFixedSP + supManagement + supMarketing + supOther) * 100) / 100;
+
+      // 10. PROFIT TIER 2: After Operation and Support Cost
+      const profitFinal15 = Math.round((profitOp15 - totalSupportCost) * 100) / 100;
+      const profitFinal35 = Math.round((profitOp35 - totalSupportCost) * 100) / 100;
+      const profitFinal80 = Math.round((profitOp80 - totalSupportCost) * 100) / 100;
+
+      // Update Top KPIs
+      document.getElementById("kpi-final-price").textContent = `$${finalPrice.toFixed(2)}`;
+      document.getElementById("kpi-price-sub").textContent = `P2P: $${p2pPrice.toFixed(2)} | HD: $${homeDeliveryFee.toFixed(2)}`;
+      document.getElementById("kpi-discount-rate").textContent = `${(discountRate * 100).toFixed(1)}%`;
+      document.getElementById("kpi-avg-price-sub").textContent = `vs Avg Tariff $${avgPrice.toFixed(2)}`;
+      document.getElementById("kpi-revenue-net").textContent = `$${totalNetRevenueBeforeTax.toFixed(2)}`;
+      document.getElementById("kpi-avg-distance").textContent = `${avgOrderDistance.toFixed(1)} km`;
+
+      // Update Table P&L values
+      const formatUSD = num => `$${num.toFixed(2)}`;
+      document.getElementById("val-rev-15").innerHTML = `<b>${formatUSD(totalNetRevenueBeforeTax)}</b>`;
+      document.getElementById("val-rev-35").innerHTML = `<b>${formatUSD(totalNetRevenueBeforeTax)}</b>`;
+      document.getElementById("val-rev-80").innerHTML = `<b>${formatUSD(totalNetRevenueBeforeTax)}</b>`;
+
+      document.getElementById("val-p2p-notax-15").textContent = formatUSD(avgPriceBeforeTax);
+      document.getElementById("val-p2p-notax-35").textContent = formatUSD(avgPriceBeforeTax);
+      document.getElementById("val-p2p-notax-80").textContent = formatUSD(avgPriceBeforeTax);
+
+      document.getElementById("val-hd-notax-15").textContent = formatUSD(homeDeliveryBeforeTax);
+      document.getElementById("val-hd-notax-35").textContent = formatUSD(homeDeliveryBeforeTax);
+      document.getElementById("val-hd-notax-80").textContent = formatUSD(homeDeliveryBeforeTax);
+
+      // Operation Cost Items
+      document.getElementById("val-fm-15").textContent = formatUSD(salaryFM);
+      document.getElementById("val-fm-35").textContent = formatUSD(salaryFM);
+      document.getElementById("val-fm-80").textContent = formatUSD(salaryFM);
+
+      document.getElementById("val-mm-15").textContent = formatUSD(salaryMM);
+      document.getElementById("val-mm-35").textContent = formatUSD(salaryMM);
+      document.getElementById("val-mm-80").textContent = formatUSD(salaryMM);
+
+      document.getElementById("val-connect-15").textContent = formatUSD(connect15);
+      document.getElementById("val-connect-35").textContent = formatUSD(connect35);
+      document.getElementById("val-connect-80").textContent = formatUSD(connect80);
+
+      document.getElementById("val-lm-15").textContent = formatUSD(salaryLM);
+      document.getElementById("val-lm-35").textContent = formatUSD(salaryLM);
+      document.getElementById("val-lm-80").textContent = formatUSD(salaryLM);
+
+      document.getElementById("val-tuktuk-15").textContent = formatUSD(tuktukExpense);
+      document.getElementById("val-tuktuk-35").textContent = formatUSD(tuktukExpense);
+      document.getElementById("val-tuktuk-80").textContent = formatUSD(tuktukExpense);
+
+      document.getElementById("val-comm-15").textContent = formatUSD(commission);
+      document.getElementById("val-comm-35").textContent = formatUSD(commission);
+      document.getElementById("val-comm-80").textContent = formatUSD(commission);
+
+      document.getElementById("val-opcost-15").innerHTML = `<b>${formatUSD(opCost15)}</b>`;
+      document.getElementById("val-opcost-35").innerHTML = `<b>${formatUSD(opCost35)}</b>`;
+      document.getElementById("val-opcost-80").innerHTML = `<b>${formatUSD(opCost80)}</b>`;
+
+      // Support Cost Items
+      document.getElementById("val-sup-fixed-15").textContent = formatUSD(supFixedSP);
+      document.getElementById("val-sup-fixed-35").textContent = formatUSD(supFixedSP);
+      document.getElementById("val-sup-fixed-80").textContent = formatUSD(supFixedSP);
+
+      document.getElementById("val-sup-mgmt-15").textContent = formatUSD(supManagement);
+      document.getElementById("val-sup-mgmt-35").textContent = formatUSD(supManagement);
+      document.getElementById("val-sup-mgmt-80").textContent = formatUSD(supManagement);
+
+      document.getElementById("val-sup-mkt-15").textContent = formatUSD(supMarketing);
+      document.getElementById("val-sup-mkt-35").textContent = formatUSD(supMarketing);
+      document.getElementById("val-sup-mkt-80").textContent = formatUSD(supMarketing);
+
+      document.getElementById("val-sup-other-15").textContent = formatUSD(supOther);
+      document.getElementById("val-sup-other-35").textContent = formatUSD(supOther);
+      document.getElementById("val-sup-other-80").textContent = formatUSD(supOther);
+
+      document.getElementById("val-supcost-15").innerHTML = `<b>${formatUSD(totalSupportCost)}</b>`;
+      document.getElementById("val-supcost-35").innerHTML = `<b>${formatUSD(totalSupportCost)}</b>`;
+      document.getElementById("val-supcost-80").innerHTML = `<b>${formatUSD(totalSupportCost)}</b>`;
+
+      // Render Badges
+      const renderBadge = (elemId, profit, sizeClass) => {
+        const elem = document.getElementById(elemId);
+        const sign = profit >= 0 ? "+" : "";
+        const badgeClass = profit >= 0 ? `profit-pill-${sizeClass} pill-green` : `profit-pill-${sizeClass} pill-red`;
+        elem.innerHTML = `<span class="${badgeClass}">${sign}$${profit.toFixed(2)}</span>`;
+      };
+
+      renderBadge("val-profit-op-15", profitOp15, "lg");
+      renderBadge("val-profit-op-35", profitOp35, "lg");
+      renderBadge("val-profit-op-80", profitOp80, "lg");
+
+      renderBadge("val-profit-final-15", profitFinal15, "xl");
+      renderBadge("val-profit-final-35", profitFinal35, "xl");
+      renderBadge("val-profit-final-80", profitFinal80, "xl");
+
+      // Recommendation determinations
+      let bestTruckOp = "8.0T Truck";
+      let bestProfitOp = profitOp80;
+      if (profitOp80 >= profitOp35 && profitOp80 >= profitOp15) {
+        bestTruckOp = "8.0T Truck"; bestProfitOp = profitOp80;
+      } else if (profitOp35 >= profitOp80 && profitOp35 >= profitOp15) {
+        bestTruckOp = "3.5T Truck"; bestProfitOp = profitOp35;
+      } else {
+        bestTruckOp = "1.5T Truck"; bestProfitOp = profitOp15;
+      }
+
+      let bestTruckFinal = "8.0T Truck";
+      let bestProfitFinal = profitFinal80;
+      if (profitFinal80 >= profitFinal35 && profitFinal80 >= profitFinal15) {
+        bestTruckFinal = "8.0T Truck"; bestProfitFinal = profitFinal80;
+      } else if (profitFinal35 >= profitFinal80 && profitFinal35 >= profitFinal15) {
+        bestTruckFinal = "3.5T Truck"; bestProfitFinal = profitFinal35;
+      } else {
+        bestTruckFinal = "1.5T Truck"; bestProfitFinal = profitFinal15;
+      }
+
+      
+
+      // Verdict box removed
+    }
+
+    // Toast Notification helper
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      const msg = document.getElementById("toast-message");
+      msg.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3500);
+    }
+
+    // COPY HIGH-RESOLUTION WORD-OPTIMIZED REPORT (840PX CANVAS)
+    async function copyWordReportAsImage() {
+      const btn = document.getElementById("btn-copy-for-word");
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Copying for Word...';
+      btn.disabled = true;
+
+      try {
+        const reportElem = document.getElementById("word-capture-report");
+
+        // Scale 2 captures crystal-sharp 1680px image that fills Word A4 perfectly without blur
+        const canvas = await html2canvas(reportElem, {
+          scale: 2,
+          backgroundColor: "#ffffff",
+          useCORS: true,
+          logging: false
+        });
+
+        canvas.toBlob(async (blob) => {
+          if (!blob) throw new Error("Unable to create image blob");
+
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({ "image/png": blob })
+            ]);
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied to Clipboard!';
+            showToast("✓ Copied A4 Word-Optimized Report! Press Ctrl + V in Word to paste.");
+          } catch (clipErr) {
+            console.warn("Direct clipboard write failed, using download fallback:", clipErr);
+            const link = document.createElement("a");
+            link.download = `Metfone_STA_Word_Report_${document.getElementById("select-province").value}_${document.getElementById("input-weight").value}kg.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            btn.innerHTML = '<i class="fa-solid fa-download"></i> Image Saved';
+            showToast("Report saved as PNG! Drag and drop into Word.");
+          } finally {
+            setTimeout(() => {
+              btn.innerHTML = originalHTML;
+              btn.disabled = false;
+            }, 2500);
+          }
+        }, "image/png");
+
+      } catch (err) {
+        console.error("Capture failed:", err);
+        alert("Failed to capture report: " + err.message);
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+      }
+    }
+
+    // Export to Excel function using SheetJS
+    function exportToExcel() {
+      const origin = document.getElementById("select-province").value;
+      const weight = document.getElementById("input-weight").value;
+      const p2p = document.getElementById("input-p2p-price").value;
+      const delivery = isHomeDelivery ? "Yes ($0.25)" : "No ($0.00)";
+
+      const wb = XLSX.utils.book_new();
+
+      const summaryData = [
+        ["METFONE EXPRESS - STA PRICE & TWO-TIER P&L STATEMENT (VER 6.11)"],
+        ["Export Date", new Date().toLocaleString()],
+        [],
+        ["INPUT PARAMETERS", "VALUE", "UNIT"],
+        ["From Province (Origin)", origin, ""],
+        ["Weight", parseFloat(weight), "kg"],
+        ["Price Want To Sell (P2P)", parseFloat(p2p), "USD"],
+        ["Home Delivery", delivery, ""],
+        [],
+        ["FINANCIAL P&L BREAKDOWN", "1.5T TRUCK", "3.5T TRUCK", "8.0T TRUCK"],
+        ["Net Customer Price (excl. VAT)", document.getElementById("val-rev-15").innerText, document.getElementById("val-rev-35").innerText, document.getElementById("val-rev-80").innerText],
+        ["-- I. OPERATION COSTS --", "", "", ""],
+        ["1. Salary of FM (Pickup)", document.getElementById("val-fm-15").textContent, document.getElementById("val-fm-35").textContent, document.getElementById("val-fm-80").textContent],
+        ["2. Salary of MM (Sorting Hub)", document.getElementById("val-mm-15").textContent, document.getElementById("val-mm-35").textContent, document.getElementById("val-mm-80").textContent],
+        ["3. Connection Linehaul Expense", document.getElementById("val-connect-15").textContent, document.getElementById("val-connect-35").textContent, document.getElementById("val-connect-80").textContent],
+        ["4. Last Mile Salary (Delivery)", document.getElementById("val-lm-15").textContent, document.getElementById("val-lm-35").textContent, document.getElementById("val-lm-80").textContent],
+        ["5. Tuk tuk Expense (>5kg & Home)", document.getElementById("val-tuktuk-15").textContent, document.getElementById("val-tuktuk-35").textContent, document.getElementById("val-tuktuk-80").textContent],
+        ["6. Sales Commission (3%)", document.getElementById("val-comm-15").textContent, document.getElementById("val-comm-35").textContent, document.getElementById("val-comm-80").textContent],
+        ["TOTAL OPERATION COST", document.getElementById("val-opcost-15").innerText, document.getElementById("val-opcost-35").innerText, document.getElementById("val-opcost-80").innerText],
+        ["PROFIT AFTER OPERATION COST (TIER 1)", document.getElementById("val-profit-op-15").innerText, document.getElementById("val-profit-op-35").innerText, document.getElementById("val-profit-op-80").innerText],
+        [],
+        ["-- II. SUPPORT COSTS --", "", "", ""],
+        ["1. Fixed salary of Service Point", document.getElementById("val-sup-fixed-15").textContent, document.getElementById("val-sup-fixed-35").textContent, document.getElementById("val-sup-fixed-80").textContent],
+        ["2. General management expense (10%)", document.getElementById("val-sup-mgmt-15").textContent, document.getElementById("val-sup-mgmt-35").textContent, document.getElementById("val-sup-mgmt-80").textContent],
+        ["3. Marketing expense (3%)", document.getElementById("val-sup-mkt-15").textContent, document.getElementById("val-sup-mkt-35").textContent, document.getElementById("val-sup-mkt-80").textContent],
+        ["4. Other expense (5%)", document.getElementById("val-sup-other-15").textContent, document.getElementById("val-sup-other-35").textContent, document.getElementById("val-sup-other-80").textContent],
+        ["TOTAL SUPPORT COST", document.getElementById("val-supcost-15").innerText, document.getElementById("val-supcost-35").innerText, document.getElementById("val-supcost-80").innerText],
+        ["PROFIT AFTER OPERATION & SUPPORT COST (TIER 2)", document.getElementById("val-profit-final-15").innerText, document.getElementById("val-profit-final-35").innerText, document.getElementById("val-profit-final-80").innerText]
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(summaryData);
+      XLSX.utils.book_append_sheet(wb, ws, "STA Calculation Ver6.11");
+      XLSX.writeFile(wb, `STA_Calculation_${origin}_${weight}kg_Ver6.11.xlsx`);
+    }
+  </script>
+</body>
+</html>
