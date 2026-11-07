@@ -490,12 +490,10 @@
     .report-context-strip .item b {
       color: var(--gray-900);
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 800;
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.18;
+      white-space: normal;
     }
 
     .report-context-strip .item span {
@@ -517,9 +515,10 @@
       background: #ffffff;
       border: 1.5px solid var(--gray-200);
       border-radius: 7px;
-      padding: 0.35rem 0.6rem;
+      padding: 0.38rem 0.65rem;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
     }
 
     .report-kpi-card .kpi-label {
@@ -534,18 +533,40 @@
       font-size: 1.28rem;
       font-weight: 900;
       color: var(--gray-900);
-      margin: 0.1rem 0;
+      margin: 0.12rem 0;
       line-height: 1.1;
       letter-spacing: -0.01em;
     }
 
     .report-kpi-card .kpi-sub {
-      font-size: 0.66rem;
-      color: var(--gray-500);
+      font-size: 0.65rem;
+      color: var(--gray-600);
       font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    /* Prominent Highlight Style for Card 1: Final Selling Price to Customer */
+    .report-kpi-card.kpi-card-selling-highlight {
+      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+      border: 2px solid var(--primary);
+      box-shadow: 0 3px 10px rgba(211, 47, 47, 0.15);
+    }
+
+    .report-kpi-card.kpi-card-selling-highlight .kpi-label {
+      color: var(--primary-dark);
+      font-weight: 900;
+    }
+
+    .report-kpi-card.kpi-card-selling-highlight .kpi-val {
+      color: var(--primary);
+      font-size: 1.38rem;
+      font-weight: 900;
+    }
+
+    .report-kpi-card.kpi-card-selling-highlight .kpi-sub {
+      color: #7f1d1d;
+      font-weight: 700;
     }
 
     /* P&L Table (High-Contrast Clean Corporate Rows) */
@@ -851,10 +872,10 @@
             </div>
           </div>
 
-          <!-- 3. Price want to sell (P2P) (USD) -->
+          <!-- 3. Price want to sell (Point to Point) (USD) -->
           <div class="form-group">
             <label class="form-label" for="input-p2p-price">
-              <span>3. Price want to sell (P2P)</span>
+              <span>3. Price want to sell (Point to Point)</span>
               <span style="font-size: 0.65rem; color: var(--success);">Proposal</span>
             </label>
             <div class="input-addon-wrap">
@@ -890,7 +911,7 @@
             <div class="dest-option-group">
               <label class="dest-radio-label">
                 <input type="radio" name="dest-ratio-type" id="ratio-opt-default" value="default" checked onchange="toggleRatioOption()">
-                <span>Option 1: Metfone general (24.8% PNP)</span>
+                <span>Option 1: Metfone Express General (24.8% Phnom Penh)</span>
               </label>
               <label class="dest-radio-label">
                 <input type="radio" name="dest-ratio-type" id="ratio-opt-custom" value="custom" onchange="toggleRatioOption()">
@@ -898,12 +919,12 @@
               </label>
               
               <div class="custom-ratio-input-box" id="custom-ratio-box">
-                <div class="input-addon-wrap" style="width: 105px;">
-                  <input type="number" min="0" max="100" step="1" class="form-control" id="input-pnp-pct" value="40" oninput="calculateSTA()" style="height: 26px; font-size: 0.78rem;">
-                  <span class="input-addon" style="font-size: 0.7rem; right: 0.4rem;">% PNP</span>
+                <div class="input-addon-wrap" style="width: 95px;">
+                  <input type="number" min="0" max="100" step="1" class="form-control" id="input-pnp-pct" value="40" oninput="calculateSTA()" style="height: 26px; font-size: 0.78rem; padding-right: 1.5rem;">
+                  <span class="input-addon" style="font-size: 0.7rem; right: 0.4rem;">%</span>
                 </div>
                 <div style="font-size: 0.68rem; color: var(--gray-600); font-weight: 700;">
-                  -> <span id="label-prov-pct" style="color: var(--primary); font-weight: 900;">60%</span> to Prov
+                  Phnom Penh &rarr; <span id="label-prov-pct" style="color: var(--primary); font-weight: 900;">60%</span> Provinces
                 </div>
               </div>
             </div>
@@ -912,12 +933,12 @@
           <!-- Ver 6.11 Formulas Callout -->
           <div class="panel-callout">
             <div style="font-weight: 800; color: var(--gray-800); margin-bottom: 2px;">
-              <i class="fa-solid fa-calculator" style="color: var(--primary);"></i> Ver 6.11 Rules & Formula
+              <i class="fa-solid fa-calculator" style="color: var(--primary);"></i> Ver 6.11 Rules &amp; Formula
             </div>
-            • <b>Discount:</b> <code>1 - (P2P / Avg Tariff)</code>.<br>
-            • <b>Tuk tuk:</b> <b>$0.18</b> (&gt;5kg &amp; Home Delivery).<br>
-            • <b>Hub MM:</b> <b>$0.15/bill</b> (incl. 13th month).<br>
-            • <b>Support:</b> SP ($0.17) + Mgmt (10%) + Mkt (3%) + Other (5%).
+            • <b>Discount Rate:</b> <code>1 - (Point-to-Point / Average Tariff)</code>.<br>
+            • <b>Tuk tuk Expense:</b> <b>$0.18</b> (&gt;5kg &amp; Home Delivery).<br>
+            • <b>Middle Mile Sorting:</b> <b>$0.15/bill</b> (including 13th month).<br>
+            • <b>Support Costs:</b> Service Point ($0.17) + Management (10%) + Marketing (3%) + Other (5%).
           </div>
 
         </div>
@@ -943,7 +964,7 @@
             </div>
           </div>
 
-          <!-- Context Input Summary Strip (Replaces separate input card in image) -->
+          <!-- Context Input Summary Strip -->
           <div class="report-context-strip">
             <div class="item">
               <span>Origin Province</span>
@@ -951,10 +972,10 @@
             </div>
             <div class="item">
               <span>Parcel Weight</span>
-              <b id="strip-weight">6.0 kg (Tier 5–10kg)</b>
+              <b id="strip-weight">6.0 kg (Over 5 – 10 kg)</b>
             </div>
             <div class="item">
-              <span>Proposal (P2P)</span>
+              <span>Point-to-Point Price</span>
               <b id="strip-p2p">$1.30 USD</b>
             </div>
             <div class="item">
@@ -962,55 +983,55 @@
               <b id="strip-delivery">Yes (+$0.25 USD)</b>
             </div>
             <div class="item">
-              <span>Destination</span>
-              <b id="strip-dest-share">Default (24.8% PNP)</b>
+              <span>Destination Share</span>
+              <b id="strip-dest-share">Default (24.8% Phnom Penh)</b>
             </div>
           </div>
 
-          <!-- Top 4 KPIs (Clear, Large, High-Contrast) -->
+          <!-- Top 4 KPIs (Card 1 Highlighted Prominently, Full Unabbreviated Labels) -->
           <div class="report-kpi-grid">
-            <div class="report-kpi-card">
-              <span class="kpi-label">FINAL SELLING PRICE</span>
+            <div class="report-kpi-card kpi-card-selling-highlight">
+              <span class="kpi-label"><i class="fa-solid fa-tag"></i> FINAL SELLING PRICE</span>
               <div class="kpi-val" id="kpi-final-price">$1.55</div>
-              <span class="kpi-sub" id="kpi-price-sub">P2P: $1.30 | HD: $0.25</span>
+              <span class="kpi-sub" id="kpi-price-sub">Point to Point: $1.30<br>Home Delivery: $0.25</span>
             </div>
             <div class="report-kpi-card">
               <span class="kpi-label">DISCOUNT RATE</span>
-              <div class="kpi-val" id="kpi-discount-rate" style="color: var(--primary);">49.2%</div>
-              <span class="kpi-sub" id="kpi-avg-price-sub">vs Avg Tariff $2.56</span>
+              <div class="kpi-val" id="kpi-discount-rate" style="color: var(--warning);">49.2%</div>
+              <span class="kpi-sub" id="kpi-avg-price-sub">vs Average Public Price: $2.56</span>
             </div>
             <div class="report-kpi-card">
-              <span class="kpi-label">NET REVENUE (EXCL. VAT)</span>
+              <span class="kpi-label">NET REVENUE (EXCLUDING VAT)</span>
               <div class="kpi-val" id="kpi-revenue-net">$1.41</div>
-              <span class="kpi-sub">P2P $1.18 + HD $0.23</span>
+              <span class="kpi-sub" id="kpi-rev-sub">Point to Point: $1.18<br>Home Delivery: $0.23</span>
             </div>
             <div class="report-kpi-card">
               <span class="kpi-label">WEIGHTED DISTANCE</span>
               <div class="kpi-val" id="kpi-avg-distance">457.7 km</div>
-              <span class="kpi-sub" id="kpi-route-note">Pick up => Mega Hub => Delivery</span>
+              <span class="kpi-sub" id="kpi-route-note">Battambang => Megahub => Delivery Province</span>
             </div>
           </div>
 
-          <!-- Main P&L Table (Tight Columns, Large Text, Both Profit Rows Visible) -->
+          <!-- Main P&L Table (Tight Columns, Large Text, Full Labels) -->
           <table class="report-pnl-table">
             <thead>
               <tr>
-                <th style="width: 43%;">COST &amp; REVENUE BREAKDOWN</th>
-                <th class="text-right" style="width: 19%;">1.5T TRUCK</th>
-                <th class="text-right" style="width: 19%;">3.5T TRUCK</th>
-                <th class="text-right" style="width: 19%;">8.0T TRUCK</th>
+                <th style="width: 45%;">COST &amp; REVENUE BREAKDOWN</th>
+                <th class="text-right" style="width: 18.3%;">1.5T TRUCK</th>
+                <th class="text-right" style="width: 18.3%;">3.5T TRUCK</th>
+                <th class="text-right" style="width: 18.4%;">8.0T TRUCK</th>
               </tr>
             </thead>
             <tbody>
               <!-- REVENUE -->
               <tr>
-                <td><b>Net Customer Price (excl. VAT 10%)</b></td>
+                <td><b>Net Customer Price (excluding VAT 10%)</b></td>
                 <td class="text-right" id="val-rev-15"><b>$1.41</b></td>
                 <td class="text-right" id="val-rev-35"><b>$1.41</b></td>
                 <td class="text-right" id="val-rev-80"><b>$1.41</b></td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem; font-size: 0.74rem; color: var(--gray-500);">• Avg P2P Price (before tax)</td>
+                <td style="padding-left: 1.1rem; font-size: 0.74rem; color: var(--gray-500);">• Average Point-to-Point Price (before tax)</td>
                 <td class="text-right" id="val-p2p-notax-15">$1.18</td>
                 <td class="text-right" id="val-p2p-notax-35">$1.18</td>
                 <td class="text-right" id="val-p2p-notax-80">$1.18</td>
@@ -1024,34 +1045,34 @@
 
               <!-- I. OPERATION COSTS -->
               <tr class="row-group-head">
-                <td colspan="4"><i class="fa-solid fa-truck-fast" style="color: var(--info);"></i> I. OPERATION COSTS (CHI PHÍ HOẠT ĐỘNG)</td>
+                <td colspan="4"><i class="fa-solid fa-truck-fast" style="color: var(--primary);"></i> I. OPERATION COSTS (CHI PHÍ HOẠT ĐỘNG)</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">1. Salary of FM (pick up)</td>
+                <td style="padding-left: 1.1rem;">1. First Mile Salary (Pick up)</td>
                 <td class="text-right" id="val-fm-15">$0.30</td>
                 <td class="text-right" id="val-fm-35">$0.30</td>
                 <td class="text-right" id="val-fm-80">$0.30</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">2. Salary of MM (sorting at Hub)</td>
+                <td style="padding-left: 1.1rem;">2. Middle Mile Salary (Sorting at Megahub)</td>
                 <td class="text-right" id="val-mm-15">$0.15</td>
                 <td class="text-right" id="val-mm-35">$0.15</td>
                 <td class="text-right" id="val-mm-80">$0.15</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">3. Connect expense (Linehaul)</td>
+                <td style="padding-left: 1.1rem;">3. Connection Expense (Linehaul)</td>
                 <td class="text-right" style="color: var(--primary); font-weight: 800;" id="val-connect-15">$0.92</td>
                 <td class="text-right" style="color: var(--warning); font-weight: 800;" id="val-connect-35">$0.39</td>
                 <td class="text-right" style="color: var(--success); font-weight: 800;" id="val-connect-80">$0.17</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">4. Salary of LM (delivery)</td>
+                <td style="padding-left: 1.1rem;">4. Last Mile Salary (Delivery)</td>
                 <td class="text-right" id="val-lm-15">$0.30</td>
                 <td class="text-right" id="val-lm-35">$0.30</td>
                 <td class="text-right" id="val-lm-80">$0.30</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">5. Tuk tuk Expense (&gt;5kg &amp; Home)</td>
+                <td style="padding-left: 1.1rem;">5. Tuk tuk Expense (&gt;5kg &amp; Home Delivery)</td>
                 <td class="text-right" style="color: var(--danger); font-weight: 700;" id="val-tuktuk-15">$0.18</td>
                 <td class="text-right" style="color: var(--danger); font-weight: 700;" id="val-tuktuk-35">$0.18</td>
                 <td class="text-right" style="color: var(--danger); font-weight: 700;" id="val-tuktuk-80">$0.18</td>
@@ -1088,28 +1109,28 @@
 
               <!-- II. SUPPORT COSTS -->
               <tr class="row-group-head">
-                <td colspan="4"><i class="fa-solid fa-headset" style="color: var(--purple);"></i> II. SUPPORT COSTS (CHI PHÍ HỖ TRỢ / QUẢN LÝ)</td>
+                <td colspan="4"><i class="fa-solid fa-headset" style="color: var(--primary);"></i> II. SUPPORT COSTS (CHI PHÍ HỖ TRỢ / QUẢN LÝ)</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">1. Fixed salary of Service Point</td>
+                <td style="padding-left: 1.1rem;">1. Fixed Salary of Service Point</td>
                 <td class="text-right" id="val-sup-fixed-15">$0.17</td>
                 <td class="text-right" id="val-sup-fixed-35">$0.17</td>
                 <td class="text-right" id="val-sup-fixed-80">$0.17</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">2. General management (10%)</td>
+                <td style="padding-left: 1.1rem;">2. General Management Expense (10%)</td>
                 <td class="text-right" id="val-sup-mgmt-15">$0.26</td>
                 <td class="text-right" id="val-sup-mgmt-35">$0.26</td>
                 <td class="text-right" id="val-sup-mgmt-80">$0.26</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">3. Marketing expense (3%)</td>
+                <td style="padding-left: 1.1rem;">3. Marketing Expense (3%)</td>
                 <td class="text-right" id="val-sup-mkt-15">$0.08</td>
                 <td class="text-right" id="val-sup-mkt-35">$0.08</td>
                 <td class="text-right" id="val-sup-mkt-80">$0.08</td>
               </tr>
               <tr>
-                <td style="padding-left: 1.1rem;">4. Other expense (5%)</td>
+                <td style="padding-left: 1.1rem;">4. Other Expense (5%)</td>
                 <td class="text-right" id="val-sup-other-15">$0.13</td>
                 <td class="text-right" id="val-sup-other-35">$0.13</td>
                 <td class="text-right" id="val-sup-other-80">$0.13</td>
@@ -1124,7 +1145,7 @@
               <!-- PROFIT TIER 2: FINAL NET PROFIT (EXTRA PROMINENT) -->
               <tr class="row-profit-tier2">
                 <td>
-                  <div style="font-size: 0.96rem; font-weight: 900; color: var(--primary-dark);">PROFIT AFTER OP &amp; SUPPORT COST</div>
+                  <div style="font-size: 0.94rem; font-weight: 900; color: var(--primary-dark);">PROFIT AFTER OPERATION &amp; SUPPORT COST</div>
                   <div style="font-size: 0.7rem; color: var(--gray-600); font-weight: 700;">Lợi nhuận ròng sau toàn bộ chi phí</div>
                 </td>
                 <td class="text-right" id="val-profit-final-15">
@@ -1397,9 +1418,9 @@
         pnpRatio = pnpInput / 100;
         provRatio = 1 - pnpRatio;
         document.getElementById("label-prov-pct").textContent = `${(provRatio * 100).toFixed(0)}%`;
-        document.getElementById("strip-dest-share").textContent = `Custom (${(pnpRatio * 100).toFixed(0)}% PNP / ${(provRatio * 100).toFixed(0)}% Prov)`;
+        document.getElementById("strip-dest-share").textContent = `Custom (${(pnpRatio * 100).toFixed(0)}% Phnom Penh / ${(provRatio * 100).toFixed(0)}% Provinces)`;
       } else {
-        document.getElementById("strip-dest-share").textContent = `Default (24.8% PNP)`;
+        document.getElementById("strip-dest-share").textContent = `Default (24.8% Phnom Penh)`;
       }
 
       // 4. Distance & Delivery Distribution Matrix
@@ -1491,13 +1512,15 @@
       const profitFinal35 = Math.round((profitOp35 - totalSupportCost) * 100) / 100;
       const profitFinal80 = Math.round((profitOp80 - totalSupportCost) * 100) / 100;
 
-      // Update Top KPIs
+      // Update Top KPIs (Full unabbreviated text & dynamic route)
       document.getElementById("kpi-final-price").textContent = `$${finalPrice.toFixed(2)}`;
-      document.getElementById("kpi-price-sub").textContent = `P2P: $${p2pPrice.toFixed(2)} | HD: $${homeDeliveryFee.toFixed(2)}`;
+      document.getElementById("kpi-price-sub").innerHTML = `Point to Point: $${p2pPrice.toFixed(2)}<br>Home Delivery: $${homeDeliveryFee.toFixed(2)}`;
       document.getElementById("kpi-discount-rate").textContent = `${(discountRate * 100).toFixed(1)}%`;
-      document.getElementById("kpi-avg-price-sub").textContent = `vs Avg Tariff $${avgPrice.toFixed(2)}`;
+      document.getElementById("kpi-avg-price-sub").textContent = `vs Average Public Price: $${avgPrice.toFixed(2)}`;
       document.getElementById("kpi-revenue-net").textContent = `$${totalNetRevenueBeforeTax.toFixed(2)}`;
+      document.getElementById("kpi-rev-sub").innerHTML = `Point to Point: $${avgPriceBeforeTax.toFixed(2)}<br>Home Delivery: $${homeDeliveryBeforeTax.toFixed(2)}`;
       document.getElementById("kpi-avg-distance").textContent = `${avgOrderDistance.toFixed(1)} km`;
+      document.getElementById("kpi-route-note").textContent = `${originName} => Megahub => Delivery Province`;
 
       // Update Table P&L values
       const formatUSD = num => `$${num.toFixed(2)}`;
